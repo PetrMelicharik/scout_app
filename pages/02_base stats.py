@@ -23,3 +23,14 @@ db = pd.read_excel('db.xlsx')
 
 leagues = sorted(db['league_name'].dropna().unique())
 leagues_filter = st.selectbox('Choose preffered league:', options=['Choose league'] + leagues)
+
+# aplikace filtru
+
+if leagues_filter != 'All leagues':
+    df_filtered = db[db['league_name'] == leagues_filter]
+
+# góly 
+
+st.write('Goals')
+df_goals = df_filtered[['player_name', 'Current Club', 'goals']]
+st.dataframe(df_goals, use_container_width=True)

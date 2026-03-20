@@ -18,6 +18,7 @@ st.write('Player stats by specific league')
 # import databáze
 
 db = pd.read_excel('db.xlsx')
+db['goals_assists_sum'] = db['goals'] + db['assists']
 
 # ligový filtr
 
@@ -40,3 +41,9 @@ st.dataframe(df_goals, use_container_width=True)
 st.write('Assists')
 df_assists = df_filtered[['player_name', 'Current Club', 'assists']].sort_values('assists', ascending=False).head(10)
 st.dataframe(df_assists, use_container_width=True)
+
+# kanadské body
+
+st.write('Golas + Assists')
+df_g_a = df_filtered[['player_name', 'Current Club', 'goals_assists_sum']].sort_values('goals_assists_sum', ascending=False).head(10)
+st.dataframe(df_g_a, use_container_width=True)

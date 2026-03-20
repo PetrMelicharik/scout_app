@@ -18,3 +18,8 @@ st.write('Player stats by specific league')
 # import databáze
 
 db = pd.read_excel('db.xlsx')
+
+# ligový filtr
+
+leagues = sorted(db['league_name'].dropna().unique())
+leagues_filter = st.selectbox('Choose preffered league:', options=['Choose league'] + leagues)

@@ -34,3 +34,9 @@ if leagues_filter != 'All leagues':
 st.write('Goals')
 df_goals = df_filtered[['player_name', 'Current Club', 'goals']].sort_values('goals', ascending=False).head(10)
 st.dataframe(df_goals, use_container_width=True)
+
+# asistence
+
+st.write('Assists')
+df_assists = df_filtered[['player_name', 'Current Club', 'assists']].sort_values('assists', ascending=False).head(10)
+st.dataframe(df_assists, use_container_width=True)

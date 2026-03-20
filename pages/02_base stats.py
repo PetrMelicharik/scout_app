@@ -32,5 +32,5 @@ if leagues_filter != 'All leagues':
 # góly 
 
 st.write('Goals')
-df_goals = df_filtered[['player_name', 'Current Club', 'goals']]
+df_goals = df_filtered[['player_name', 'Current Club', 'goals']].sort_values('goals', ascending=False).head(10)
 st.dataframe(df_goals, use_container_width=True)

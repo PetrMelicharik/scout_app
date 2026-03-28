@@ -97,7 +97,7 @@ logo = Image.open('logo.png')
 # paramatry a hodnoty
 
 params = labels
-values = [round(float(v) * 100, 1) for v in values]
+values = [int(round(float(v) * 100, 0)) for v in values]
 
 # barvy výsečí 
 
@@ -130,11 +130,11 @@ fig, ax = baker.make_pizza(
         edgecolor="#F2F2F2", zorder=2, linewidth=1
     ),                               # values to be used when plotting slices
     kwargs_params=dict(
-        color="#000000", fontsize=11,
+        color="#000000", fontsize=10,
         fontproperties=font_normal.prop, va="center"
     ),                               # values to be used when adding parameter
     kwargs_values=dict(
-        color="#000000", fontsize=11,
+        color="#000000", fontsize=9,
         fontproperties=font_normal.prop, zorder=3,
         bbox=dict(
             edgecolor="#000000", facecolor="cornflowerblue",

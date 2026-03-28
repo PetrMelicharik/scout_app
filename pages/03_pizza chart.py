@@ -134,7 +134,7 @@ fig, ax = baker.make_pizza(
         fontproperties=font_normal.prop, va="center"
     ),                               # values to be used when adding parameter
     kwargs_values=dict(
-        color="#000000", fontsize=9,
+        color="#000000", fontsize=10,
         fontproperties=font_normal.prop, zorder=3,
         bbox=dict(
             edgecolor="#000000", facecolor="cornflowerblue",

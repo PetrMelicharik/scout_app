@@ -143,6 +143,8 @@ fig, ax = baker.make_pizza(
     )                                # values to be used when adding parameter-values
 )
 
+fig.patch.set_facecolor("white")
+
 # hlavička grafu
 
 tittle_text = f"{filtered_player['player_name'].iloc[0]} - {filtered_player['position'].iloc[0]} - {filtered_player['Current Club'].iloc[0]}"

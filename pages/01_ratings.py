@@ -17,7 +17,10 @@ st.write('Players sorted by rating. You can filter by age or league')
 
 # import databáze
 
-db = pd.read_excel('db.xlsx')
+def load_db():
+    return pd.read_excel('db.xlsx')
+
+db = load_db()
 
 # filtrování dle věku
 

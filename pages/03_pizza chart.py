@@ -22,7 +22,10 @@ st.write('Select specific player to show his pizza chart')
 
 # import databáze
 
-db = pd.read_excel('db.xlsx')
+def load_db():
+    return pd.read_excel('db.xlsx')
+
+db = load_db()
 
 # filtrování ligy
 

@@ -17,7 +17,11 @@ st.write('Player stats by specific league')
 
 # import databáze
 
-db = pd.read_excel('db.xlsx')
+def load_db():
+    return pd.read_excel('db.xlsx')
+
+db = load_db()
+
 db['goals_assists_sum'] = db['goals'] + db['assists']
 
 # ligový filtr

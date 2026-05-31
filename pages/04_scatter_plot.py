@@ -3,6 +3,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 from adjustText import adjust_text
+import random
 
 # nastavení stránky - kosmetická úprava
 st.set_page_config(page_title='FM Scouts app', page_icon='⚽')

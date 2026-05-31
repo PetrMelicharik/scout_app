@@ -79,131 +79,135 @@ filtered_club = filtered_league[filtered_league['Current Club'] == team]
 player = st.selectbox('Select player:', sorted(filtered_club['player_name'].unique()))
 filtered_player = filtered_club[filtered_club['player_name'] == player]
 
-# příprava dat pro pizza chart
+# tlačítko
+generate = st.button("Generate chart")
 
-labels = [pretty_labels[col] for col in radar_cols]
-values = [filtered_player[col + '_pct'].iloc[0] for col in radar_cols]
+if generate:
+    # příprava dat pro pizza chart
 
-# import fontů
+    labels = [pretty_labels[col] for col in radar_cols]
+    values = [filtered_player[col + '_pct'].iloc[0] for col in radar_cols]
 
-font_normal = FontManager(Path("fonts/Roboto-Regular.ttf").resolve().as_uri())
-font_bold = FontManager(Path("fonts/RobotoSlab.ttf").resolve().as_uri())
-font_italic = FontManager(Path("fonts/Roboto-Italic.ttf").resolve().as_uri())
+    # import fontů
 
-# příprava obrázku
+    font_normal = FontManager(Path("fonts/Roboto-Regular.ttf").resolve().as_uri())
+    font_bold = FontManager(Path("fonts/RobotoSlab.ttf").resolve().as_uri())
+    font_italic = FontManager(Path("fonts/Roboto-Italic.ttf").resolve().as_uri())
 
-logo = Image.open('logo.png')
+    # příprava obrázku
 
-# paramatry a hodnoty
+    logo = Image.open('logo.png')
 
-params = labels
-values = [int(round(float(v) * 100, 0)) for v in values]
+    # paramatry a hodnoty
 
-# barvy výsečí 
+    params = labels
+    values = [int(round(float(v) * 100, 0)) for v in values]
 
-slice_colors = ["#1A78CF"] * 5 + ["#FF9300"] * 5 + ["#D70232"] * 5
-text_colors = ["#000000"] * 10 + ["#F2F2F2"] * 5
+    # barvy výsečí 
 
-# styl grafu
+    slice_colors = ["#1A78CF"] * 5 + ["#FF9300"] * 5 + ["#D70232"] * 5
+    text_colors = ["#000000"] * 10 + ["#F2F2F2"] * 5
 
-baker = PyPizza(
-    params=params,                  # list of parameters
-    background_color="#EBEBE9",     # background color
-    straight_line_color="#EBEBE9",  # color for straight lines
-    straight_line_lw=1,             # linewidth for straight lines
-    last_circle_lw=0,               # linewidth of last circle
-    other_circle_lw=0,              # linewidth for other circles
-    inner_circle_size=20            # size of inner circle
-)
+    # styl grafu
 
-# vykreslení grafu
+    baker = PyPizza(
+        params=params,                  # list of parameters
+        background_color="#EBEBE9",     # background color
+        straight_line_color="#EBEBE9",  # color for straight lines
+        straight_line_lw=1,             # linewidth for straight lines
+        last_circle_lw=0,               # linewidth of last circle
+        other_circle_lw=0,              # linewidth for other circles
+        inner_circle_size=20            # size of inner circle
+    )
 
-fig, ax = baker.make_pizza(
-    values,                          # list of values
-    figsize=(8, 8.5),                # adjust figsize according to your need
-    color_blank_space="same",        # use same color to fill blank space
-    slice_colors=slice_colors,       # color for individual slices
-    value_colors=text_colors,        # color for the value-text
-    value_bck_colors=slice_colors,   # color for the blank spaces
-    blank_alpha=0.4,                 # alpha for blank-space colors
-    kwargs_slices=dict(
-        edgecolor="#F2F2F2", zorder=2, linewidth=1
-    ),                               # values to be used when plotting slices
-    kwargs_params=dict(
-        color="#000000", fontsize=10,
-        fontproperties=font_normal.prop, va="center"
-    ),                               # values to be used when adding parameter
-    kwargs_values=dict(
-        color="#000000", fontsize=10,
-        fontproperties=font_normal.prop, zorder=3,
-        bbox=dict(
-            edgecolor="#000000", facecolor="cornflowerblue",
-            boxstyle="round,pad=0.2", lw=1
-        )
-    )                                # values to be used when adding parameter-values
-)
+    # vykreslení grafu
 
-fig.patch.set_facecolor("white")
+    fig, ax = baker.make_pizza(
+        values,                          # list of values
+        figsize=(8, 8.5),                # adjust figsize according to your need
+        color_blank_space="same",        # use same color to fill blank space
+        slice_colors=slice_colors,       # color for individual slices
+        value_colors=text_colors,        # color for the value-text
+        value_bck_colors=slice_colors,   # color for the blank spaces
+        blank_alpha=0.4,                 # alpha for blank-space colors
+        kwargs_slices=dict(
+            edgecolor="#F2F2F2", zorder=2, linewidth=1
+        ),                               # values to be used when plotting slices
+        kwargs_params=dict(
+         color="#000000", fontsize=10,
+            fontproperties=font_normal.prop, va="center"
+        ),                               # values to be used when adding parameter
+        kwargs_values=dict(
+            color="#000000", fontsize=10,
+            fontproperties=font_normal.prop, zorder=3,
+            bbox=dict(
+                edgecolor="#000000", facecolor="cornflowerblue",
+                boxstyle="round,pad=0.2", lw=1
+            )
+        )                                # values to be used when adding parameter-values
+    )
 
-# hlavička grafu
+    fig.patch.set_facecolor("white")
 
-tittle_text = f"{filtered_player['player_name'].iloc[0]} - {filtered_player['position'].iloc[0]} - {filtered_player['Current Club'].iloc[0]}"
+    # hlavička grafu
 
-fig.text(
-    0.515, 0.975, tittle_text, size=16,
-    ha='center', fontproperties=font_bold.prop, color='#000000'
-)
+    tittle_text = f"{filtered_player['player_name'].iloc[0]} - {filtered_player['position'].iloc[0]} - {filtered_player['Current Club'].iloc[0]}"
 
-# informace pod hlavičku
+    fig.text(
+        0.515, 0.975, tittle_text, size=16,
+        ha='center', fontproperties=font_bold.prop, color='#000000'
+    )
 
-tittle2 = f"Season {filtered_player['season'].iloc[0]} {filtered_player['league_name'].iloc[0]} - Percentile Rank - Values per 90 - Min 600 mins played"
+    # informace pod hlavičku
 
-fig.text(
-    0.515, 0.953,tittle2, size=13,
-    ha="center", fontproperties=font_bold.prop, color="#000000"
-)
+    tittle2 = f"Season {filtered_player['season'].iloc[0]} {filtered_player['league_name'].iloc[0]} - Percentile Rank - Values per 90 - Min 600 mins played"
 
-# text vysvětlivky
-fig.text(
-    0.34, 0.925, "Attacking        Possession       Defending", size=14,
-    fontproperties=font_bold.prop, color="#000000"
-)
+    fig.text(
+        0.515, 0.953,tittle2, size=13,
+        ha="center", fontproperties=font_bold.prop, color="#000000"
+    )
 
-# barvy k vysvětlivkám
-fig.patches.extend([
-    plt.Rectangle(
-        (0.31, 0.9225), 0.025, 0.021, fill=True, color="#1a78cf",
-        transform=fig.transFigure, figure=fig
-    ),
-    plt.Rectangle(
-        (0.462, 0.9225), 0.025, 0.021, fill=True, color="#ff9300",
-        transform=fig.transFigure, figure=fig
-    ),
-    plt.Rectangle(
-        (0.632, 0.9225), 0.025, 0.021, fill=True, color="#d70232",
-        transform=fig.transFigure, figure=fig
-    ),
-])
+    # text vysvětlivky
+    fig.text(
+        0.34, 0.925, "Attacking        Possession       Defending", size=14,
+        fontproperties=font_bold.prop, color="#000000"
+    )
 
-# přidání loga
+    # barvy k vysvětlivkám
+    fig.patches.extend([
+        plt.Rectangle(
+            (0.31, 0.9225), 0.025, 0.021, fill=True, color="#1a78cf",
+            transform=fig.transFigure, figure=fig
+        ),
+        plt.Rectangle(
+            (0.462, 0.9225), 0.025, 0.021, fill=True, color="#ff9300",
+            transform=fig.transFigure, figure=fig
+        ),
+        plt.Rectangle(
+            (0.632, 0.9225), 0.025, 0.021, fill=True, color="#d70232",
+            transform=fig.transFigure, figure=fig
+        ),
+    ])
 
-ax_image = add_image(
-    logo, fig, left=0.4478, bottom=0.4315, width=0.13, height=0.127
-)
+    # přidání loga
 
-st.pyplot(fig)
+    ax_image = add_image(
+        logo, fig, left=0.4478, bottom=0.4315, width=0.13, height=0.127
+    )
 
-# stažení grafu
+    st.pyplot(fig)
 
-import io
-buf = io.BytesIO()
-fig.savefig(buf, format="png", dpi=300, bbox_inches="tight")
-buf.seek(0)
+    # stažení grafu
 
-# tlačítko pro stažení
-st.download_button(
-    label="📥 Download chart",
-    data=buf,
-    file_name=f"{filtered_player['player_name'].iloc[0]}_radar.png",
-    mime="image/png"
-)
+    import io
+    buf = io.BytesIO()
+    fig.savefig(buf, format="png", dpi=300, bbox_inches="tight")
+    buf.seek(0)
+
+    # tlačítko pro stažení
+    st.download_button(
+        label="📥 Download chart",
+        data=buf,
+        file_name=f"{filtered_player['player_name'].iloc[0]}_radar.png",
+        mime="image/png"
+    )

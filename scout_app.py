@@ -41,7 +41,8 @@ flags = [
     ("sk.png", "Slovak Niké Liga"),
     ("si.png", "Slovenian PrvaLiga"),
     ("se.png", "Swedish Allsvenskan"),   
-    ("se.png", "Swedish Superettan") 
+    ("se.png", "Swedish Superettan"),
+    ("ua.png", "Ukraine Premier League")
 ]
 
 for flag, name in flags:
